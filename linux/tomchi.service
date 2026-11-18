@@ -1,6 +1,6 @@
 [Unit]
 Description=Tomchi IP Camera & Bonus Server
-After=network-online.target
+After=network-online.target tailscaled.service
 Wants=network-online.target
 
 [Service]

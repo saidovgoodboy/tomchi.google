@@ -83,14 +83,17 @@ echo "== 5. Tailscale orqali telefondan HTTPS kirish =="
 if ! command -v tailscale >/dev/null 2>&1; then
   curl -fsSL https://tailscale.com/install.sh | sh
 fi
+systemctl enable --now tailscaled >/dev/null 2>&1 || true
+SERVER_PORT="$(grep -E '^PORT=' "$APP_DIR/.env" | tail -n 1 | cut -d= -f2 || true)"
+SERVER_PORT="${SERVER_PORT:-8000}"
 if tailscale status >/dev/null 2>&1; then
-  tailscale serve --bg 8000 || true
+  tailscale serve --bg "${SERVER_PORT}" || true
   TS_HOST="$(tailscale status --json | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d.get("Self",{}).get("DNSName","").rstrip("."))' 2>/dev/null || true)"
   if [ -n "$TS_HOST" ]; then
     echo "Telefondan HTTPS kirish tayyor: https://${TS_HOST}"
   fi
 else
-  echo "Tailscale hali ulanmagan. Ulanish uchun: sudo tailscale up && sudo tailscale serve --bg 8000"
+  echo "Tailscale hali ulanmagan. Ulanish uchun: sudo tailscale up && sudo tailscale serve --bg ${SERVER_PORT}"
 fi
 
-echo "Lokal kirish: http://$(hostname -I | awk '{print $1}'):8000"
+echo "Lokal kirish: http://$(hostname -I | awk '{print $1}'):${SERVER_PORT}"
