@@ -31,7 +31,7 @@ O‘rnatish skripti barcha kerakli paketlarni (`Python 3`, `FFmpeg`, `Tesseract 
 
 ### A) GitHub orqali 1 buyruqda o‘rnatish
 ```bash
-git clone <SIZNING_GITHUB_REPO_URL> tomchi
+git clone https://github.com/saidovgoodboy/tomchi.google tomchi
 cd tomchi
 sudo bash linux/install.sh
 ```
