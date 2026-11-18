@@ -1,0 +1,10 @@
+node_modules
+dist
+build_deb
+.env
+.tomchi-data.json
+backend/database/*.db
+backend/storage/*
+backend/.venv
+__pycache__
+*.pyc
